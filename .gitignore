@@ -1,0 +1,6 @@
+*.pyc
+jagodjango/
+manage.py
+*.sqlite3
+*.iml
+.idea/
