@@ -19,7 +19,6 @@ untuk versi Django versi 3 belum sepenuhnya selesai.
 ## Catatan
 
 * Masih diperlukan menambahkan cara kontribusi, biasanya file **CONTRIBUTING**.md.
-* Masih diperlukan menambahkan lisensi dari _repository_, biasanya file **LICENSE**.md. Rencananya berlisensi MIT.
 * Masih diperlukan penjelasan lebih detil mengenai Django Apps yang sudah ada.
 
 ## Kontributor

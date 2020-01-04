@@ -1,5 +1,9 @@
 # Django App halo dunia! (hello world)
 
+### Objektif
+
+Membuat Django App `hello world`.
+
 ### Langkah untuk integrasikan dengan Django Project 
 
 * tambahkan direktori `halo` ke sebuah Django Project
@@ -37,7 +41,7 @@ urlpatterns = [
 file ini akan diacu oleh `urls.py` yang ada di Django Project untuk URL yang diawali **/halo/**
 
 * di file `urls.py`, dengan menuliskan path string kosong (''), artinya halaman utama **/halo/**,
-akan diarahkan untuk diproses ke views dengan nama (fungsi) index. Kemudian path ini diberi nama **halo-index**,
+akan diarahkan untuk diproses ke views dengan nama (fungsi) `index`. Kemudian path ini diberi nama **halo-index**,
 untuk dapat dikenali di seluruh proyek dengan nama tersebut, contohnya ada di bagian tests.
 
 * Django App `halo` dilengkapi dengan pengujian `tests.py`, yang akan mengakses halaman dengan nama `halo-index`,

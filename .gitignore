@@ -4,3 +4,4 @@ manage.py
 *.sqlite3
 *.iml
 .idea/
+*/migrations/[0-9]*.py
