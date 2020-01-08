@@ -47,7 +47,7 @@ jobs:
       run: |
         echo ${{ matrix.django-app }}
         coverage run --source=${{ matrix.django-app }} manage.py test --settings=${{ matrix.django-app }}.tests_settings ${{ matrix.django-app }}
-        coverage xml
+        coverage xml --omit=${{ matrix.django-app }}/admin.py
     - name: Codecov
       uses: codecov/codecov-action@v1.0.5
       with:
