@@ -11,7 +11,7 @@ jobs:
       matrix:
         python-version: [3.6, 3.7, 3.8]
         django-version: [2.2, 3.0.0]
-        django-app: ${{ secrets.JAGODJANGO_APPS }}
+        django-app: [halo, splitviewsmodels]
 
     steps:
     - uses: actions/checkout@v1
@@ -36,7 +36,6 @@ jobs:
       run: |
         django-admin startproject jagodjango .
         python manage.py migrate
-        echo ${{ secrets.JAGODJANGO_APPS }}
     - name: Test Django App halo
       run: |
         python manage.py test --settings=halo.tests_settings halo
