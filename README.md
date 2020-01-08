@@ -1,3 +1,5 @@
+![](https://github.com/oonid/jagodjango/workflows/Django%20apps/badge.svg)
+
 # Jago Django
 
 > ya, itu berima.
@@ -26,7 +28,7 @@ untuk versi Django versi 3 belum sepenuhnya selesai.
 ## Catatan
 
 * Masih diperlukan menambahkan cara kontribusi, biasanya file **CONTRIBUTING**.md.
-* Gunakan fitur [isu](issues) untuk diskusi atau memberikan masukan.
+* Gunakan fitur [isu](../issues) untuk diskusi atau memberikan masukan.
 
 ## Kontributor
 
