@@ -22,13 +22,14 @@ Dilengkapi dengan `tests` untuk `views` dan `models`.
 
 ### Versi Kompatibel
 
-Saat ini digunakan versi Django LTS 2.2 dalam proses development, pengujian
-untuk versi Django versi 3 belum sepenuhnya selesai.
+Proses `test` dilakukan untuk Python 3.6, 3.7, 3.8 dan Django 2.1, 2.2, 3.0.
+
+Pengecekan dengan GitHub Actions [workflow Django apps](https://github.com/oonid/jagodjango/actions?query=workflow%3A%22Django+apps%22), keberhasilannya ditampilkan pada badge di atas.
 
 ## Catatan
 
 * Masih diperlukan menambahkan cara kontribusi, biasanya file **CONTRIBUTING**.md.
-* Gunakan fitur [isu](../issues) untuk diskusi atau memberikan masukan.
+* Gunakan fitur [isu](https://github.com/oonid/jagodjango/issues) untuk diskusi atau memberikan masukan.
 
 ## Kontributor
 

@@ -32,6 +32,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Setup Django
       run: |
-        django-admin startproject jgdj .
+        django-admin startproject jagodjango .
+        python manage.py migrate
         find .
-        python manage.py showmigrations
+    - name: Test Django App halo
+      run: |
+        python manage.py test --settings=halo.tests_settings halo
