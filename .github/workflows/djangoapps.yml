@@ -19,7 +19,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         django-version: ${{ matrix.django-version }}
-        django-app: ${{ secret.JAGODJANGO_APPS }}
+        django-app: ${{ secrets.JAGODJANGO_APPS }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -35,7 +35,7 @@ jobs:
       run: |
         django-admin startproject jagodjango .
         python manage.py migrate
-        find .
+        echo ${{ secrets.JAGODJANGO_APPS }}
     - name: Test Django App halo
       run: |
         python manage.py test --settings=halo.tests_settings halo
