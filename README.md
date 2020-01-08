@@ -22,7 +22,7 @@ Dilengkapi dengan `tests` untuk `views` dan `models`.
 
 ### Versi Kompatibel
 
-Proses `test` dilakukan untuk Python 3.6, 3.7, 3.8 dan Django 2.1, 2.2, 3.0.
+Proses `test` dilakukan untuk Python 3.6, 3.7, 3.8 dan Django 2.2 LTS, 3.0.
 
 Pengecekan dengan GitHub Actions [workflow Django apps](https://github.com/oonid/jagodjango/actions?query=workflow%3A%22Django+apps%22), keberhasilannya ditampilkan pada badge di atas.
 
