@@ -1,4 +1,5 @@
 ![](https://github.com/oonid/jagodjango/workflows/Django%20apps/badge.svg)
+[![codecov](https://codecov.io/gh/oonid/jagodjango/branch/master/graph/badge.svg)](https://codecov.io/gh/oonid/jagodjango)
 
 # Jago Django
 
