@@ -25,6 +25,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install Django~=${{ matrix.django-version }}
+        pip install coverage
     - name: Lint with flake8
       run: |
         pip install flake8
@@ -42,4 +43,17 @@ jobs:
         python manage.py makemigrations --settings=${{ matrix.django-app }}.tests_settings ${{ matrix.django-app }}
         python manage.py migrate --settings=${{ matrix.django-app }}.tests_settings ${{ matrix.django-app }}
         python manage.py test --settings=${{ matrix.django-app }}.tests_settings ${{ matrix.django-app }}
-
+    - name: Test Coverage and Generate Report
+      run: |
+        echo ${{ matrix.django-app }}
+        coverage run --source=${{ matrix.django-app }} manage.py test --settings=${{ matrix.django-app }}.tests_settings ${{ matrix.django-app }}
+        coverage xml
+    - name: Codecov
+      uses: codecov/codecov-action@v1.0.5
+      with:
+        # User defined upload name. Visible in Codecov UI
+        name: ${{ matrix.python-version }}/${{ matrix.django-version }}/${{ matrix.django-app }}
+        # Repository upload token - get it from codecov.io
+        token: ${{ secrets.CODECOV_TOKEN }}
+        # Path to coverage file to upload
+        file: ./coverage.xml
