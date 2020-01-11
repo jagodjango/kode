@@ -1,12 +1,12 @@
 from django.conf import settings
 
 settings.configure(
-        INSTALLED_APPS=['halo.apps.HaloConfig',],
+        INSTALLED_APPS=['splitviewsmodels.apps.SplitviewsmodelsConfig',],
         DATABASES={
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': 'db.sqlite3',
             },
         },
-        ROOT_URLCONF='halo.tests_urls',
+        ROOT_URLCONF='splitviewsmodels.urls_tests',
         )
