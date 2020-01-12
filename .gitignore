@@ -2,6 +2,7 @@
 jagodjango/
 manage.py
 *.sqlite3
+media/
 *.iml
 .idea/
 */migrations/[0-9]*.py

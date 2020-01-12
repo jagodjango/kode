@@ -20,6 +20,9 @@ setiap direktori adalah satu Django _App_.
 * [splitviewsmodels](splitviewsmodels/README.md): aplikasi dengan file `views.py` atau/dan `models.py` diubah menjadi 
 direktori (_python package_), dengan meminimalisir perubahan dalam proses `import` (jika melakukan _refactor_).
 Dilengkapi dengan `tests` untuk `views` dan `models`.
+* [profilpenggunafoto](profilpenggunafoto/README.md): aplikasi yang menambahkan field `nomorponsel` dan `foto` ke
+sistem autentikasi dan autorisasi bawaan di Django `contrib.auth.models.User`. Dilengkapi dengan `test` untuk `views` dan `models`
+(termasuk `ImageField` dengan pengujian upload gambar).
 
 ### Versi Kompatibel
 

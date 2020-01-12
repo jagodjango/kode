@@ -11,7 +11,7 @@ jobs:
       matrix:
         python-version: [3.6, 3.7, 3.8]
         django-version: [2.2, 3.0.0]
-        django-app: [halo, splitviewsmodels]
+        django-app: [halo, splitviewsmodels, profilpenggunafoto]
 
     steps:
     - uses: actions/checkout@v1
@@ -47,7 +47,7 @@ jobs:
       run: |
         echo ${{ matrix.django-app }}
         coverage run --source=${{ matrix.django-app }} manage.py test --settings=${{ matrix.django-app }}.settings_tests ${{ matrix.django-app }}
-        coverage xml --omit=${{ matrix.django-app }}/admin.py
+        coverage xml --omit=${{ matrix.django-app }}/admin.py,${{ matrix.django-app }}/*tests.py,${{ matrix.django-app }}/migrations/*.py
     - name: Codecov
       uses: codecov/codecov-action@v1.0.5
       with:
