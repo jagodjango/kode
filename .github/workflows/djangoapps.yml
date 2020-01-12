@@ -26,6 +26,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install Django~=${{ matrix.django-version }}
         pip install coverage
+    - name: Install dependencies for Django App with ImageField
+      if: ${{ matrix.django-app }} == 'profilepenggunafoto'
+      run: |
+        pip install Pillow        
     - name: Lint with flake8
       run: |
         pip install flake8
