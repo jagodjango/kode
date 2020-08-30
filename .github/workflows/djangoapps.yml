@@ -3,8 +3,21 @@ name: Django apps
 on: [push]
 
 jobs:
+  init-empty-python-version-artifact:
+    name: Init python-version artifact with empty file
+    runs-on: ubuntu-latest
+    steps:
+    - shell: bash
+      run: |
+        touch python-version.txt
+    - name: upload list of python version to artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: python-version
+        path: python-version.txt
   get-python-version:
     name: Get list of Python version as artifact
+    needs: init-empty-python-version-artifact
     runs-on: ubuntu-latest
     strategy:
       matrix:
