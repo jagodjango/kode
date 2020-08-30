@@ -57,20 +57,6 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - name: download list of python version from artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: python-version
-    - shell: bash
-      run: |
-        export PYVERS=`cat python-version.txt`
-    - name: download list of django version from artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: django-version
-    - shell: bash
-      run: |
-        export DJVERS=`cat django-version.txt`
     - uses: actions/checkout@v2
     - name: Get Django Apps
       id: get-apps
@@ -79,11 +65,18 @@ jobs:
         git fetch origin ${{ github.event.before }} --depth=1
         APPS=$(ls)
         echo "$APPS"
+        for name in `ls`; do echo $name; if [ $name != "README.md" ] && [ $name != "LICENSE" ]; then echo $name; fi done
+    - uses: actions/download-artifact@v2
+      with:
+        name: python-version
+    - uses: actions/download-artifact@v2
+      with:
+        name: django-version
     - name: Set matrix for build
       id: set-matrix
       run: |
         echo "set-matrix"
-        for pyver in $PYVERS; do echo $pyver; done
+        DJVERS=`cat django-version.txt`
         echo $DJVERS
         JSON="{\"python-version\": 3.6, \"django-version\": 2.2, \"django-app\": \"halo\" }, "
         echo $JSON
