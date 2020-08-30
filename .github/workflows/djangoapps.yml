@@ -3,22 +3,63 @@ name: Django apps
 on: [push]
 
 jobs:
+  get-python-version:
+    name: Get list of Python version as artifact
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+          python-version: [3.6, 3.7, 3.8]
+    steps:
+    - shell: bash
+      run: |
+        echo ${{ matrix.python-version }} >> python-version.txt
+    - name: upload list of python version to artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: python-version
+        path: python-version.txt
+  get-django-version:
+    name: Get list of Django version as artifact
+    runs-on: ubuntu-latest
+    steps:
+    - shell: bash
+      run: |
+        echo "2.2" > django-version.txt
+        echo "3.0.0" >> django-version.txt
+        echo "3.1" >> django-version.txt
+    - name: upload list of django version to artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: django-version
+        path: django-version.txt
   generate-matrix:
     name: Generate matrix for build
+    needs: get-python-version, get-django-version
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-    env:
-      python-version: [3.6, 3.7, 3.8]
-      django-version: [2.2, 3.0.0, 3.1]
     steps:
+    - name: download list of python version from artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: python-version
+    - shell: bash
+      run: |
+        pyvers=`cat python-version.txt`
+    - name: download list of django version from artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: django-version
+    - shell: bash
+      run: |
+        djvers=`cat django-version.txt`
     - uses: actions/checkout@v2
     - name: Get Django Apps
       id: get-apps
       run: |
-        echo ${{ python-version }}
-        echo ${{ django-version }}
-        # Push
+        echo ${{ pyvers }}
+        echo ${{ djvers }}
+        # invoked by push
         git fetch origin ${{ github.event.before }} --depth=1
         APPS=$(ls)
         echo "$APPS"
