@@ -9,25 +9,33 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.6, 3.7, 3.8]
         include:
-          - django-version: 2.2
+          - python-version: 3.6
+            django-version: 2.2
             django-app: halo
-          - django-version: 2.2
+          - python-version: 3.7
+            django-version: 2.2
             django-app: splitviewsmodels
-          - django-version: 2.2
+          - python-version: 3.8
+            django-version: 2.2
             django-app: profilpenggunafoto
-          - django-version: 3.0.0
+          - python-version: 3.6
+            django-version: 3.0.0
             django-app: halo
-          - django-version: 3.0.0
+          - python-version: 3.7
+            django-version: 3.0.0
             django-app: splitviewsmodels
-          - django-version: 3.0.0
+          - python-version: 3.8
+            django-version: 3.0.0
             django-app: profilpenggunafoto
-          - django-version: 3.1
+          - python-version: 3.6
+            django-version: 3.1
             django-app: halo
-          - django-version: 3.1
+          - python-version: 3.7
+            django-version: 3.1
             django-app: splitviewsmodels
-          - django-version: 3.1
+          - python-version: 3.8
+            django-version: 3.1
             django-app: profilpenggunafoto
 
     steps:
