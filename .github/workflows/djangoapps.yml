@@ -3,8 +3,37 @@ name: Django apps
 on: [push]
 
 jobs:
-  build:
+  generate-matrix:
+    name: Generate matrix for build
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    env:
+      python-version: [3.6, 3.7, 3.8]
+      django-version: [2.2, 3.0.0, 3.1]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get Django Apps
+      id: get-apps
+      run: |
+        echo ${{ python-version }}
+        echo ${{ django-version }}
+        # Push
+        git fetch origin ${{ github.event.before }} --depth=1
+        APPS=$(ls)
+        echo "$APPS"
+    - name: Set matrix for build
+      id: set-matrix
+      run: |
+        echo "set-matrix"
+        JSON="{\"python-version\": 3.6, \"django-version\": 2.2, \"django-app\": \"halo\" }, "
+        echo $JSON
+        # set output
+        echo "::set-output name=matrix::$( echo "$JSON" )"
 
+  build:
+    name: Build ${{ matrix.python-version }}/${{ matrix.django-version}}/${{ matrix.django-app }}
+    needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -46,6 +75,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        echo ${{fromJson(needs.generate-matrix.outputs.matrix)}}
         python -m pip install --upgrade pip
         pip install Django~=${{ matrix.django-version }}
         pip install coverage
