@@ -43,20 +43,16 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: python-version
-    - shell: bash
-      run: |
-        pyvers=`cat python-version.txt`
     - name: download list of django version from artifact
       uses: actions/download-artifact@v2
       with:
         name: django-version
-    - shell: bash
-      run: |
-        djvers=`cat django-version.txt`
     - uses: actions/checkout@v2
     - name: Get Django Apps
       id: get-apps
       run: |
+        pyvers=`cat python-version.txt`
+        djvers=`cat django-version.txt`
         echo ${{ pyvers }}
         echo ${{ djvers }}
         # invoked by push
