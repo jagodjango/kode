@@ -53,8 +53,8 @@ jobs:
       run: |
         PYVERS=`cat python-version.txt`
         export djvers=`cat django-version.txt`
-        echo ${{ pyvers }}
-        echo ${{ djvers }}
+        for pyver in $PYVERS; do echo $pyver; done
+        echo $djvers
         # invoked by push
         git fetch origin ${{ github.event.before }} --depth=1
         APPS=$(ls)
