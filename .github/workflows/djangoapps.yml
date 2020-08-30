@@ -65,7 +65,7 @@ jobs:
         git fetch origin ${{ github.event.before }} --depth=1
         APPS=$(ls)
         echo "$APPS"
-        for name in `ls`; do echo $name; if [ $name != "README.md" ] && [ $name != "LICENSE" ]; then echo $name; fi done
+        for name in `ls`; do if [ $name != "README.md" ] && [ $name != "LICENSE" ]; then echo $name >> django-app.txt; fi done
     - uses: actions/download-artifact@v2
       with:
         name: python-version
@@ -76,8 +76,24 @@ jobs:
       id: set-matrix
       run: |
         echo "set-matrix"
+        PYVERS=`cat python-version.txt`
+        echo $PYVERS
         DJVERS=`cat django-version.txt`
         echo $DJVERS
+        DJAPPS=`cat django-app.txt`
+        echo $DJAPPS
+        for pyver in $PYVERS
+        do
+          echo $pyver
+          for djver in $DJVERS
+          do
+            echo $djver
+            for djapp in $DJAPPS
+            do
+              echo $djapp
+            done
+          done
+        done
         JSON="{\"python-version\": 3.6, \"django-version\": 2.2, \"django-app\": \"halo\" }, "
         echo $JSON
         # set output
