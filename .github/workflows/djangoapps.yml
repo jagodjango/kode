@@ -34,7 +34,7 @@ jobs:
         path: django-version.txt
   generate-matrix:
     name: Generate matrix for build
-    needs: get-python-version, get-django-version
+    needs: [get-python-version, get-django-version]
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
