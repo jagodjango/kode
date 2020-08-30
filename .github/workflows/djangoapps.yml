@@ -11,8 +11,24 @@ jobs:
       matrix:
         python-version: [3.6, 3.7, 3.8]
         include:
-          - django-version: [2.2, 3.0.0, 3.1]
-          - django-app: [halo, splitviewsmodels, profilpenggunafoto]
+          - django-version: 2.2
+            django-app: halo
+          - django-version: 2.2
+            django-app: splitviewsmodels
+          - django-version: 2.2
+            django-app: profilpenggunafoto
+          - django-version: 3.0.0
+            django-app: halo
+          - django-version: 3.0.0
+            django-app: splitviewsmodels
+          - django-version: 3.0.0
+            django-app: profilpenggunafoto
+          - django-version: 3.1
+            django-app: halo
+          - django-version: 3.1
+            django-app: splitviewsmodels
+          - django-version: 3.1
+            django-app: profilpenggunafoto
 
     steps:
     - uses: actions/checkout@v2
