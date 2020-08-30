@@ -51,8 +51,8 @@ jobs:
     - name: Get Django Apps
       id: get-apps
       run: |
-        pyvers=`cat python-version.txt`
-        djvers=`cat django-version.txt`
+        PYVERS=`cat python-version.txt`
+        export djvers=`cat django-version.txt`
         echo ${{ pyvers }}
         echo ${{ djvers }}
         # invoked by push
