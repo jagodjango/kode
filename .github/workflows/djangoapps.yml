@@ -42,9 +42,10 @@ jobs:
     steps:
     - shell: bash
       run: |
-        echo "2.2" > django-version.txt
-        echo "3.0.0" >> django-version.txt
-        echo "3.1" >> django-version.txt
+        for djver in 2.2 3.0.0 3.1
+        do
+            echo $djver >> django-version.txt
+        done
     - name: upload list of django version to artifact
       uses: actions/upload-artifact@v2
       with:
@@ -63,9 +64,11 @@ jobs:
       run: |
         # invoked by push
         git fetch origin ${{ github.event.before }} --depth=1
-        APPS=$(ls)
-        echo "$APPS"
-        for name in `ls`; do if [ $name != "README.md" ] && [ $name != "LICENSE" ]; then echo $name >> django-app.txt; fi done
+        for name in `ls`; do
+          if [ $name != "README.md" ] && [ $name != "LICENSE" ]; then
+            echo $name >> django-app.txt;
+          fi
+        done
     - uses: actions/download-artifact@v2
       with:
         name: python-version
@@ -82,6 +85,8 @@ jobs:
         echo $DJVERS
         DJAPPS=`cat django-app.txt`
         echo $DJAPPS
+        # construct JSON with loop of all variables
+        JSON="{\"include\":["
         for pyver in $PYVERS
         do
           echo $pyver
@@ -91,10 +96,21 @@ jobs:
             for djapp in $DJAPPS
             do
               echo $djapp
+              # Add build to the matrix only if it is not already included
+              JSONline="{\"python-version\": $pyver, \"django-version\": $djver, \"django-app\": \"$djapp\"},"
+              if [[ "$JSON" != *"$JSONline"* ]]
+              then
+                JSON="$JSON$JSONline"
+                echo $JSON
+              fi
             done
           done
         done
-        JSON="{\"python-version\": 3.6, \"django-version\": 2.2, \"django-app\": \"halo\" }, "
+        # Remove last "," and add closing brackets
+        if [[ $JSON == *, ]]; then
+          JSON="${JSON%?}"
+        fi
+        JSON="$JSON]}"
         echo $JSON
         # set output
         echo "::set-output name=matrix::$( echo "$JSON" )"
@@ -105,36 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
-      matrix:
-        include:
-          - python-version: 3.6
-            django-version: 2.2
-            django-app: halo
-          - python-version: 3.7
-            django-version: 2.2
-            django-app: splitviewsmodels
-          - python-version: 3.8
-            django-version: 2.2
-            django-app: profilpenggunafoto
-          - python-version: 3.6
-            django-version: 3.0.0
-            django-app: halo
-          - python-version: 3.7
-            django-version: 3.0.0
-            django-app: splitviewsmodels
-          - python-version: 3.8
-            django-version: 3.0.0
-            django-app: profilpenggunafoto
-          - python-version: 3.6
-            django-version: 3.1
-            django-app: halo
-          - python-version: 3.7
-            django-version: 3.1
-            django-app: splitviewsmodels
-          - python-version: 3.8
-            django-version: 3.1
-            django-app: profilpenggunafoto
-
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
