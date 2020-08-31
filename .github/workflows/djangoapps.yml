@@ -151,7 +151,7 @@ jobs:
         coverage run --source=${{ matrix.django-app }} manage.py test --settings=${{ matrix.django-app }}.settings_tests ${{ matrix.django-app }}
         coverage xml --omit=${{ matrix.django-app }}/admin.py,${{ matrix.django-app }}/*tests.py,${{ matrix.django-app }}/migrations/*.py
     - name: Codecov
-      uses: codecov/codecov-action@v1.0.5
+      uses: codecov/codecov-action@v1.0.13
       with:
         # User defined upload name. Visible in Codecov UI
         name: ${{ matrix.python-version }}/${{ matrix.django-version }}/${{ matrix.django-app }}
