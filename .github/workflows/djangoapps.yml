@@ -42,7 +42,7 @@ jobs:
     steps:
     - shell: bash
       run: |
-        # can not define 3.0 will be replaced as 3
+        # do not define as 3.0 will be replaced as 3
         for djver in 2.2 3.0.0 3.1
         do
             echo $djver >> django-version.txt
@@ -79,30 +79,22 @@ jobs:
     - name: Set matrix for build
       id: set-matrix
       run: |
-        echo "set-matrix"
         PYVERS=`cat python-version.txt`
-        echo $PYVERS
         DJVERS=`cat django-version.txt`
-        echo $DJVERS
         DJAPPS=`cat django-app.txt`
-        echo $DJAPPS
         # construct JSON with loop of all variables
         JSON="{\"include\":["
         for pyver in $PYVERS
         do
-          echo $pyver
           for djver in $DJVERS
           do
-            echo $djver
             for djapp in $DJAPPS
             do
-              echo $djapp
               # Add build to the matrix only if it is not already included
               JSONline="{\"python-version\": $pyver, \"django-version\": \"$djver\", \"django-app\": \"$djapp\"},"
               if [[ "$JSON" != *"$JSONline"* ]]
               then
                 JSON="$JSON$JSONline"
-                echo $JSON
               fi
             done
           done
@@ -129,9 +121,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Install dependencies Django ${{ matrix.django-version }}
       run: |
-        echo ${{fromJson(needs.generate-matrix.outputs.matrix)}}
         python -m pip install --upgrade pip
         pip install Django~=${{ matrix.django-version }}
         pip install coverage
@@ -150,15 +141,13 @@ jobs:
       run: |
         django-admin startproject jagodjango .
         python manage.py migrate
-    - name: Setup Django Apps and Tests
+    - name: Setup Django Apps and Tests for ${{ matrix.django-app }}
       run: |
-        echo ${{ matrix.django-app }}
         python manage.py makemigrations --settings=${{ matrix.django-app }}.settings_tests ${{ matrix.django-app }}
         python manage.py migrate --settings=${{ matrix.django-app }}.settings_tests ${{ matrix.django-app }}
         python manage.py test --settings=${{ matrix.django-app }}.settings_tests ${{ matrix.django-app }}
-    - name: Test Coverage and Generate Report
+    - name: Test Coverage and Generate Report for ${{ matrix.django-app }}
       run: |
-        echo ${{ matrix.django-app }}
         coverage run --source=${{ matrix.django-app }} manage.py test --settings=${{ matrix.django-app }}.settings_tests ${{ matrix.django-app }}
         coverage xml --omit=${{ matrix.django-app }}/admin.py,${{ matrix.django-app }}/*tests.py,${{ matrix.django-app }}/migrations/*.py
     - name: Codecov
